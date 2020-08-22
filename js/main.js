@@ -1,19 +1,47 @@
 !function() {
+  // 调速使用JQuery语法 采用冒泡机制减少内存消耗
+  $('.actions').on('click','button', function(e) {
+    let $button = $(e.currentTarget)  //获取到哪个button元素的监听器触发了事件  绑定监听事件的对象
+    let speed = $button.attr('data-speed')  //获取点击获得的自定义属性
+    // console.log(speed)
+    $button.addClass('active').siblings('.active').removeClass('active')
+    switch (speed) {
+      case 'slow':
+        speedTime = 100
+        break;
+
+      case 'middle':
+        speedTime = 50
+        break;
+
+      case 'fast':
+        speedTime = 10
+        break;
+    }
+  })
+
+  // 动画完成后
+  function end() {
+    alert('皮卡丘已经绘制成功啦~！！！');
+  }
+
+    var speedTime = 50
     function writeCode(prefix, code, fn){
         let container = document.querySelector('#code')
         let styleTag = document.querySelector('#styleTag')
         let n = 0;
-        let id = setInterval(() => {
+        setTimeout(function run(){
             n+=1
             container.innerHTML = code.substring(0, n)
             styleTag.innerHTML = code.substring(0, n)
             // scrollHeight 元素包含的高度（包括溢出窗口不可见的内容），scrollTop向上滚动的像素
             container.scrollTop = container.scrollHeight
-            if(n >= code.length) {
-                window.clearInterval(id)
-                fn && fn.call()
+            if(n <= code.length) {
+              setTimeout(run, speedTime)
+            }else {
+              fn && fn.call()
             }
-        },10)
+        },speedTime)
     }
     let code = `
 /*
@@ -147,7 +175,7 @@
     transform: rotate(20deg);
   }
 
-  /* 下嘴唇的描绘 */
+  /* 舌头的描绘 */
   .downLip-wrapper{
     bottom: 0;
     position: absolute;
@@ -157,7 +185,7 @@
     width: 100px;
     overflow: hidden;
   }
-  /* 下嘴唇开始 */
+  /* 舌头绘制开始 */
   .downLip {
     width: 100px;
     height: 800px;
@@ -168,6 +196,9 @@
     background: #990513;
     overflow: hidden;
   }
+/*
+ *  好了，这只皮卡丘是送给你的礼物
+ */
   .downLip::after {
     content: "";
     position: absolute;
@@ -180,5 +211,6 @@
     border-radius: 50px;
   }
 `
-    writeCode('',code)
+    writeCode('',code, end)
+
 }.call()
