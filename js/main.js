@@ -7,15 +7,15 @@
     $button.addClass('active').siblings('.active').removeClass('active')
     switch (speed) {
       case 'slow':
-        speedTime = 100
-        break;
-
-      case 'middle':
         speedTime = 50
         break;
 
-      case 'fast':
+      case 'middle':
         speedTime = 10
+        break;
+
+      case 'fast':
+        speedTime = 0.05
         break;
     }
   })
@@ -25,7 +25,7 @@
     alert('皮卡丘已经绘制成功啦~！！！');
   }
 
-    var speedTime = 50
+    var speedTime = 10
     function writeCode(prefix, code, fn){
         let container = document.querySelector('#code')
         let styleTag = document.querySelector('#styleTag')
@@ -196,9 +196,6 @@
     background: #990513;
     overflow: hidden;
   }
-/*
- *  好了，这只皮卡丘是送给你的礼物
- */
   .downLip::after {
     content: "";
     position: absolute;
@@ -210,6 +207,9 @@
     margin-left: -50px;
     border-radius: 50px;
   }
+/*
+ *  好了，这只皮卡丘是送给你的礼物
+ */
 `
     writeCode('',code, end)
 
